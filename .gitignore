@@ -1,0 +1,33 @@
+# ---- Data and generated output ----------------------------------------
+figures/data/
+figures/data.7z
+
+# Keep the output folder (needed by the figure scripts), ignore its contents
+figures/figs/*
+!figures/figs/.gitkeep
+
+# ---- Logs and temporary files ------------------------------------------
+*.log
+temp/
+.temp/
+
+# ---- Python ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# ---- R -----------------------------------------------------------------
+.Rhistory
+.RData
+.Rproj.user/
+
+# ---- IDEs / editors ----------------------------------------------------
+.idea/
+.vscode/
+
+# ---- OS ----------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
