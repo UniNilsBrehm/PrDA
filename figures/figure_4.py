@@ -36,7 +36,7 @@ def plot_visual_left_right_hist(ax, neuron_df, p_val, style, n_bins=10):
     n, bins, patches = ax.hist(
         [left_vals, right_vals],
         bins=bins,
-        label=["Left (ipsilateral)", "Right (contralateral)"],
+        label=["Left (ipsilat.)", "Right (contralat.)"],
         color=[color_left, color_right],
         alpha=0.8
     )
@@ -57,11 +57,11 @@ def plot_visual_left_right_hist(ax, neuron_df, p_val, style, n_bins=10):
     ax.set_ylabel('Count (neurons)')
     ax.legend(
         loc="lower left",
-        bbox_to_anchor=(0.60, 0.70),  # legend's bottom-left corner goes exactly here
+        bbox_to_anchor=(0.01, 0.80),  # legend's bottom-left corner goes exactly here
         frameon=False,
         fontsize=8
     )
-    ax.text(0.02, 0.95, f'p={p_val:.2f}', transform=ax.transAxes, **style.txtAnnotation)
+    ax.text(0.05, 0.80, f'p={p_val:.2f}', transform=ax.transAxes, **style.txtAnnotation)
 
 
 def prepare_visual_neuron_counts(df):
@@ -430,6 +430,9 @@ def create_figure():
     # Get regressor scores
     neuron_df, p_left_right, p_left_right_frac = get_score_data(base_dir)
 
+    # Load image
+    schematic_img = plt.imread(f'{base_dir}/images/circuit_schematic.png')
+
     # ==================================================================================================================
     # Figure
     # A4 page: The figure will be on a DinA4 page in the final pdf file
@@ -483,10 +486,13 @@ def create_figure():
     axs['zoom_bl'] = plt.subplot(grid[90:124, 80:110])
     axs['zoom_dl'] = plt.subplot(grid[90:124, 120:150])
 
-    axs['anatomical_map'] = plt.subplot(grid[140:200, 0:60])  # 50 x 50
+    axs['anatomical_map'] = plt.subplot(grid[140:190, 0:50])  # 50 x 50
     # axs['anatomical_map_colorbar'] = plt.subplot(grid[150:190, 62:64])
 
-    axs['lr_hist'] = plt.subplot(grid[140:200, 90:150])
+    # axs['lr_hist'] = plt.subplot(grid[140:200, 90:150])
+    axs['lr_hist'] = plt.subplot(grid[140:190, 65:105])
+
+    axs['schematic'] = plt.subplot(grid[140:190, 110:160])
 
     # ==================================================================================================================
     # A) and B) Ca heatmap
@@ -691,6 +697,11 @@ def create_figure():
     hide_axis_spines(axs['lr_hist'])
 
     # ------------------------------------------------------------------------------------------------------------------
+    # G) Circuit Schematic
+    axs['schematic'].imshow(schematic_img)
+    axs['schematic'].axis('off')
+
+    # ------------------------------------------------------------------------------------------------------------------
     # Add Sub-Figure Caps
     # from plotting_utils import set_caption_labels
     # set_caption_labels(fig)
@@ -703,7 +714,8 @@ def create_figure():
         'C': (np.float64(0.03), np.float64(0.58)),
         'D': (np.float64(0.50), np.float64(0.58)),
         'E': (np.float64(0.03), np.float64(0.33)),
-        'F': (np.float64(0.50), np.float64(0.33))
+        'F': (np.float64(0.39), np.float64(0.33)),
+        'G': (np.float64(0.68), np.float64(0.33))
     }
 
     # Redefine position to DinA4 page
